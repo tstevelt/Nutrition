@@ -1,0 +1,100 @@
+
+#include	"EnterRecipe.h"
+
+void CreateFood ()
+{
+	DBY_QUERY	*qry;
+	time_t	TimeStamp;
+	int		rv;
+
+	TimeStamp = time ( NULL );
+
+	sprintf ( Statement,
+		"select sum(Fcalorie), sum(Fcarb), sum(Fprotein), sum(Ffat) from food, recfood where Fid = RFfood and RFrecipe = %ld", RecipeID );
+
+#define DEBUG
+#ifdef DEBUG
+	printf ( "%s<br>\n", Statement );
+#endif
+	
+	if (( qry = dbySelect ( "nutrition", &MySql, Statement, LogFileName )) == NULL )
+	{
+		printf ( "Could not calculate macros<br>\n" );
+		return;
+	}
+	
+	if (( qry->EachRow = mysql_fetch_row ( qry->Result )) == NULL )
+	{
+		printf ( "Could not fetch row<br>\n" );
+		return;
+	}
+
+/*---------------------------------------------------------------------------
++----------+----------------------+------+-----+---------+----------------+
+| Field    | Type                 | Null | Key | Default | Extra          |
++----------+----------------------+------+-----+---------+----------------+
+| Fid      | int(11) unsigned     | NO   | PRI | NULL    | auto_increment |
+| Fname    | varchar(40)          | NO   |     | name    |                |
+| Fserving | varchar(10)          | NO   |     | each    |                |
+| Fcalorie | smallint(5) unsigned | YES  |     | NULL    |                |
+| Fcarb    | smallint(5) unsigned | YES  |     | NULL    |                |
+| Fprotein | smallint(5) unsigned | YES  |     | NULL    |                |
+| Ffat     | smallint(5) unsigned | YES  |     | NULL    |                |
+| inserted | int(11)              | YES  |     | NULL    |                |
++----------+----------------------+------+-----+---------+----------------+
++----------+------------------+------+-----+---------+----------------+
+| Field    | Type             | Null | Key | Default | Extra          |
++----------+------------------+------+-----+---------+----------------+
+| Rid      | int(11) unsigned | NO   | PRI | NULL    | auto_increment |
+| Rdescr   | varchar(40)      | NO   |     |         |                |
+| Rserving | smallint(6)      | NO   |     | 4       |                |
+| Rfood    | int(11) unsigned | YES  |     | NULL    |                |
+| inserted | int(11)          | YES  |     | NULL    |                |
++----------+------------------+------+-----+---------+----------------+
+---------------------------------------------------------------------------*/
+
+	xfood.xfcalorie = nsAtoi(qry->EachRow[0] ) / xrecipe.xrserving;
+	xfood.xfcarb    = nsAtoi(qry->EachRow[1] ) / xrecipe.xrserving;
+	xfood.xfprotein = nsAtoi(qry->EachRow[2] ) / xrecipe.xrserving;
+	xfood.xffat     = nsAtoi(qry->EachRow[3] ) / xrecipe.xrserving;
+
+	sprintf ( Statement, 
+		"insert into food ( Fname, Frecipe, Fcalorie, Fcarb, Fprotein, Ffat, inserted ) values ( '%s', %ld, %d, %d, %d, %d, %ld )",
+	xrecipe.xrdescr,
+	RecipeID,
+	xfood.xfcalorie,
+	xfood.xfcarb,
+	xfood.xfprotein,
+	xfood.xffat,
+	TimeStamp );
+
+#ifdef DEBUG
+	printf ( "%s<br>\n", Statement );
+#endif
+	
+	if (( rv = dbyInsert ( "nutrition", &MySql, Statement, 0, LogFileName )) != 1 )
+	{
+		printf ( "Could not insert food record<br>\n" );
+		return;
+	}
+
+	sprintf ( WhereClause, "inserted = %ld", TimeStamp );
+	if (( rv = LoadFood ( WhereClause, &xfood, 0 )) != 1 )
+	{
+		printf ( "Could not load new food<br>\n" );
+		return;
+	}
+
+	sprintf ( Statement, "update recipe set Rfood = %ld where Rid = %ld", xfood.xfid, RecipeID );
+
+#ifdef DEBUG
+	printf ( "%s<br>\n", Statement );
+#endif
+
+	if (( rv = dbyUpdate ( "nutrition", &MySql, Statement, 0, LogFileName )) != 1 )
+	{
+		printf ( "Could not update recipe<br>\n" );
+		return;
+	}
+
+}

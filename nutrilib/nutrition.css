@@ -1,0 +1,162 @@
+/*     Nutrition Tracking Website */
+/*     Copyright (C)  2023-2024 Tom Stevelt */
+/*     This program is free software: you can redistribute it and/or modify */
+/*     it under the terms of the GNU Affero General Public License as */
+/*     published by the Free Software Foundation, either version 3 of the */
+/*     License, or (at your option) any later version. */
+/*     This program is distributed in the hope that it will be useful, */
+/*     but WITHOUT ANY WARRANTY; without even the implied warranty of */
+/*     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the */
+/*     GNU Affero General Public License for more details. */
+/*     You should have received a copy of the GNU Affero General Public License */
+/*     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
+
+/* Indiana University colors */
+/* https://styleguide.iu.edu/visual-style/colors.html */
+
+/* Purdue University colors */
+/* https://marcom.purdue.edu/our-brand/visual-identity/ */
+
+
+.acct-display-topmiddle
+{
+	position:absolute;
+	left:50%;
+	top:10%;
+	transform:translate(-50%,0%);
+	-ms-transform:translate(-50%,0%)
+}
+
+.Breakfast
+{
+	background-color: #ffd699;
+}
+
+.Lunch
+{
+	background-color: #b3ffff;
+}
+
+.Dinner
+{
+	background-color: #f0b3ff;
+}
+
+.Snack
+{
+	background-color: #c6ffb3;
+}
+
+.TabSelected 
+{
+	background-color: #c0c0c0;
+	color: #ffff66
+}
+
+.TabOther 
+{
+	background-color: #defdf7;
+	color: #000000
+}
+
+table.AppWide
+{
+	width: 92%;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+table.AppMedium
+{
+	width: 75%;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+table.AppHalf
+{
+	width: 50%;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.HeadingRow 
+{
+	background-color: #c0c0c0;
+	color: #101010
+}
+
+u
+{
+	color: Blue
+}
+
+a.Heading:link 
+{
+	color: #101010
+}
+
+a.Heading:visited 
+{
+	color: #101010
+}
+
+a.Heading:hover 
+{
+	color: #ffff66
+}
+
+a.Heading:active 
+{
+	color: #ffff66
+}
+
+input[type=search], [type=text], [type=number] 
+{
+	-webkit-appearance: none;
+	-moz-appearance: none;
+}
+
+input[type=button], input[type=submit], input[type=reset] 
+{
+	font-size: 10pt;
+	font-weight: normal;
+	-webkit-border-radius: 5px;
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	border-radius: 5px;
+	color: #000000;
+	background-color: #f0f0f0;
+	box-shadow: 2px 2px 1px #888888;
+}
+
+input[type=submit][disabled]:active, input[type=submit][disabled]
+{
+	font-size: 10pt;
+	font-weight: normal;
+	-webkit-border-radius: 5px;
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	border-radius: 5px;
+	color: #c0c0c0;
+	background-color: #f0f0f0;
+	box-shadow: 2px 2px 1px #888888;
+}
+
+select 
+{
+	box-shadow: 2px 2px 1px #888888;
+}
+
+textarea 
+{
+	box-shadow: 2px 2px 1px #888888;
+}
+
+.footer
+{
+	font-size: smaller;
+	color: #666666;
+	text-align: center;
+}
+

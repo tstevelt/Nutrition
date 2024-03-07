@@ -1,0 +1,162 @@
+-- MySQL dump 10.19  Distrib 10.3.39-MariaDB, for Linux (x86_64)
+--
+-- Host: 127.0.0.1    Database: nutrition
+-- ------------------------------------------------------
+-- Server version	10.3.39-MariaDB
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Table structure for table `food`
+--
+
+DROP TABLE IF EXISTS `food`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `food` (
+  `Fid` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `Fname` varchar(40) NOT NULL DEFAULT 'name',
+  `Fserving` varchar(10) NOT NULL DEFAULT 'EACH',
+  `Fcalorie` double DEFAULT 0,
+  `Fcarb` double DEFAULT 0,
+  `Fprotein` double DEFAULT 0,
+  `Ffat` double DEFAULT 0,
+  `Fsodium` double DEFAULT 0,
+  `Ffiber` double DEFAULT 0,
+  `inserted` int(11) DEFAULT 0,
+  `Frecipe` int(11) DEFAULT 0,
+  `Fmember` int(11) unsigned NOT NULL DEFAULT 103,
+  `Fgroup` varchar(16) DEFAULT NULL,
+  `Fstatus` char(1) NOT NULL DEFAULT 'B',
+  PRIMARY KEY (`Fid`),
+  KEY `Fmember` (`Fmember`),
+  CONSTRAINT `food_ibfk_1` FOREIGN KEY (`Fmember`) REFERENCES `member` (`Mid`)
+) ENGINE=InnoDB AUTO_INCREMENT=8412 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `histfood`
+--
+
+DROP TABLE IF EXISTS `histfood`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `histfood` (
+  `HFhist` int(11) unsigned NOT NULL,
+  `HFfood` int(11) unsigned NOT NULL,
+  `HFserving` double NOT NULL DEFAULT 1,
+  KEY `HFhist` (`HFhist`),
+  KEY `HFfood` (`HFfood`),
+  CONSTRAINT `histfood_ibfk_1` FOREIGN KEY (`HFhist`) REFERENCES `history` (`Hid`) ON DELETE CASCADE,
+  CONSTRAINT `histfood_ibfk_2` FOREIGN KEY (`HFfood`) REFERENCES `food` (`Fid`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `history`
+--
+
+DROP TABLE IF EXISTS `history`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `history` (
+  `Hid` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `Hmember` int(11) unsigned NOT NULL,
+  `Hdescr` varchar(10) NOT NULL DEFAULT 'lunch',
+  `Hdate` date NOT NULL DEFAULT '0000-00-00',
+  `inserted` int(11) DEFAULT NULL,
+  PRIMARY KEY (`Hid`),
+  KEY `Hmember` (`Hmember`),
+  CONSTRAINT `history_ibfk_1` FOREIGN KEY (`Hmember`) REFERENCES `member` (`Mid`) ON DELETE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=1784 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `member`
+--
+
+DROP TABLE IF EXISTS `member`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `member` (
+  `Mid` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `Mname` varchar(30) NOT NULL DEFAULT 'name',
+  `Mpassword` varchar(42) DEFAULT NULL,
+  `Mgender` char(1) NOT NULL DEFAULT 'M',
+  `Mbirthdate` date NOT NULL DEFAULT '0000-00-00',
+  `Mweight` smallint(5) unsigned NOT NULL DEFAULT 150,
+  `Mipaddr` char(16) NOT NULL DEFAULT '',
+  `Mcalorie` smallint(5) unsigned NOT NULL DEFAULT 1500,
+  `Mcarb` smallint(5) unsigned NOT NULL DEFAULT 750,
+  `Mprotein` smallint(5) unsigned NOT NULL DEFAULT 100,
+  `Mfat` smallint(5) unsigned NOT NULL DEFAULT 35,
+  `Mstatus` char(1) NOT NULL DEFAULT 'P',
+  `Mrole` char(1) NOT NULL DEFAULT 'M',
+  `Memail` varchar(80) DEFAULT NULL,
+  `Mheight` smallint(5) unsigned NOT NULL DEFAULT 69,
+  `Mactive` char(1) NOT NULL DEFAULT '2',
+  `Mdiet` char(1) NOT NULL DEFAULT 'S',
+  `inserted` int(11) DEFAULT NULL,
+  `Msodium` smallint(5) unsigned NOT NULL DEFAULT 1500,
+  `Mfiber` smallint(5) unsigned NOT NULL DEFAULT 20,
+  PRIMARY KEY (`Mid`)
+) ENGINE=InnoDB AUTO_INCREMENT=112 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `recfood`
+--
+
+DROP TABLE IF EXISTS `recfood`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `recfood` (
+  `RFrecipe` int(11) unsigned NOT NULL,
+  `RFfood` int(11) unsigned NOT NULL,
+  `RFamount` double NOT NULL,
+  KEY `RFrecipe` (`RFrecipe`),
+  KEY `RFfood` (`RFfood`),
+  CONSTRAINT `recfood_ibfk_2` FOREIGN KEY (`RFfood`) REFERENCES `food` (`Fid`),
+  CONSTRAINT `recfood_ibfk_3` FOREIGN KEY (`RFrecipe`) REFERENCES `recipe` (`Rid`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `recipe`
+--
+
+DROP TABLE IF EXISTS `recipe`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `recipe` (
+  `Rid` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `Rdescr` varchar(40) NOT NULL DEFAULT '',
+  `Rserving` smallint(6) unsigned NOT NULL DEFAULT 4,
+  `Rfood` int(11) unsigned DEFAULT NULL,
+  `inserted` int(11) DEFAULT NULL,
+  `Rmember` int(11) unsigned NOT NULL DEFAULT 103,
+  PRIMARY KEY (`Rid`),
+  KEY `Rmember` (`Rmember`),
+  CONSTRAINT `recipe_ibfk_1` FOREIGN KEY (`Rmember`) REFERENCES `member` (`Mid`)
+) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2024-03-07 17:50:54

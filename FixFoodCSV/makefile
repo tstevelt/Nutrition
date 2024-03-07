@@ -1,0 +1,30 @@
+PROG = FixFoodCSV
+LIB = FixFoodCSV.a
+XLIB = /usr/local/lib64/shslib.a
+DEF = /usr/local/include
+DEF1 = ../../include
+DEF2 = /usr/local/include
+PRG = /usr/local/bin/$(PROG)
+
+FILES = \
+	$(LIB)(FixFoodCSV.o)
+
+.SILENT:
+
+$(PRG): $(LIB) $(XLIB)
+	echo "using gcc to load $(PRG)"
+	gcc -o $(PRG) $(LIB) $(XLIB)
+
+$(LIB): $(FILES)
+
+$(FILES): $(DEF)/shslib.h
+
+clean:
+	rm -f $(LIB)
+
+all:
+	make clean
+	make
+
+.PRECIOUS: $(LIB)
+

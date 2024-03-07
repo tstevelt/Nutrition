@@ -1,0 +1,40 @@
+#
+#	contents.db for nutrition.silverhammersoftware.com/www.cgi
+#
+
+title	Welcome to nutrition.silverhammersoftware.com
+
+footer	Copyright 2023 Tom Stevelt and Silver Hammer Software LLC
+
+# warning, if you re-number menu pages, then you will need to 
+# fix the defines in the nutrition.h source code.  MENU_INDEX_???
+#
+menu 1 Home
+menu 2 About
+menu 3 Edit Profile
+menu 4 Admin
+menu 5 Signup
+menu 6 Login
+menu 7 Logout
+
+page 1 sf=1
+page 1 home.html
+page 1 plan.html
+page 1 food.html
+page 1 hist.html
+
+page 2 about.html
+
+page 3 sf=3
+
+page 4 reports.html
+page 4 maint.html
+
+page 5 sf=5
+
+page 6 login.html
+page 6 forgot.html
+
+page 7 logout.html
+
+
