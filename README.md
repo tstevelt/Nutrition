@@ -3,6 +3,7 @@
 
 Program   |Description
 ----------|---------------------------------------------------------------
+nutrilib | Library functions for website and associated programs
 nutrition | The main nutrition website
 EnterDay | Enter foods eaten during a day.
 rptplan | Generate a meal plan for one day, meeting member's requirements.
