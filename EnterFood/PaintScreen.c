@@ -229,7 +229,7 @@ printf ( "</tr>\n" );
 			printf ( "&emsp;<input type='submit' name='submitClear' value='clear'>\n" );
 			printf ( "&emsp;<input type='submit' name='submitUpdate' value='update'%s>\n", CookieMember.xmid == DEMO_MEMBER ? " disabled" : "" );
 #ifdef SAFETY_ON_DELETE
-			seed_random_with_usec ();
+			shs_seed_random ();
 			HiddenSafety = random_range ( 123, 987 );
 
 			printf ( "<input type='hidden' name='HiddenSafety' value='%d'>\n", HiddenSafety );
